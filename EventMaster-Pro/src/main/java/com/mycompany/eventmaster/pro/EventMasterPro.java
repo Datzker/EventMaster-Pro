@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.eventmaster.pro;
 
 /**
- *
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
-public class EventMasterPro {
 
+public class EventMasterPro {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        EventMasterSystem system = new EventMasterSystem();
+        Menu.showMainMenu(system);
     }
 }
