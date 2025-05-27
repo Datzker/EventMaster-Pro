@@ -14,12 +14,12 @@ import java.util.HashMap;
  */
 
 public class EventMasterSystem {
-    private ArrayList<Events> events;
+    private ArrayList<EventBase> events;
     private ArrayList<Location> locations;
     private ArrayList<Artist> artists;
     private ArrayList<Ticket> tickets;
     private ArrayList<Sale> sales;
-    private HashMap<Events, ArrayList<Sale>> eventSales;
+    private HashMap<EventBase, ArrayList<Sale>> eventSales;
     private AccessControl accessControl;
     private Finance finance;
 
@@ -35,18 +35,17 @@ public class EventMasterSystem {
     }
 
     // Events
-    public void createEvent(Events event) {
+    public void createEvent(EventBase event) {
         events.add(event);
     }
 
-    public void modifyEvent(String eventName, String newDate, String newTime, String newCategory, Location newLocation, double newBudget) {
-        for (Events event : events) {
+    public void modifyEvent(String eventName, String newDate, String newTime, Location newLocation, double newBudget) {
+        for (EventBase event : events) {
             if (event.getName().equalsIgnoreCase(eventName)) {
-                event.setDate(newDate);
-                event.setTime(newTime);
-                event.setCategory(newCategory);
-                event.setLocation(newLocation);
-                event.setBudget(newBudget);
+                event.date = newDate;
+                event.time = newTime;
+                event.location = newLocation;
+                event.budget = newBudget;
             }
         }
     }
@@ -55,7 +54,7 @@ public class EventMasterSystem {
         events.removeIf(e -> e.getName().equalsIgnoreCase(eventName));
     }
 
-    public ArrayList<Events> getEvents() {
+    public ArrayList<EventBase> getEvents() {
         return events;
     }
 
@@ -94,7 +93,7 @@ public class EventMasterSystem {
         return tickets;
     }
 
-    public void registerSale(Events event, Sale sale) {
+    public void registerSale(EventBase event, Sale sale) {
         sales.add(sale);
         finance.addIncome(sale.getTicket().getPrice());
 
@@ -106,7 +105,7 @@ public class EventMasterSystem {
         return sales;
     }
 
-    public ArrayList<Sale> getSalesByEvent(Events event) {
+    public ArrayList<Sale> getSalesByEvent(EventBase event) {
         return eventSales.getOrDefault(event, new ArrayList<>());
     }
 
