@@ -7,9 +7,11 @@ package com.mycompany.eventmaster.pro;
 import com.mycompany.eventmaster.pro.EventMasterSystem;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
+
 public class AccessControlPanelForm extends javax.swing.JPanel {
 
     private EventMasterSystem system;
@@ -20,6 +22,7 @@ public class AccessControlPanelForm extends javax.swing.JPanel {
     public AccessControlPanelForm(EventMasterSystem system) {
         this.system = system;
         initComponents();
+
         jButtonValidate.addActionListener(e -> validateAccessCode());
         jButtonRefreshTotal.addActionListener(e -> refreshTotalAttendees());
         refreshTotalAttendees();
@@ -27,11 +30,14 @@ public class AccessControlPanelForm extends javax.swing.JPanel {
 
     private void validateAccessCode() {
         String code = jTextFAccessCode.getText().trim();
+
         if (code.isEmpty()) {
             jLabelResult.setText("Enter a code.");
             return;
         }
+
         boolean valid = system.validateAccessCode(code);
+        
         if (valid) {
             jLabelResult.setText("Access granted.");
         } else {

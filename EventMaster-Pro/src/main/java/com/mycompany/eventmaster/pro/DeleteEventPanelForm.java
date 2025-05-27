@@ -8,8 +8,9 @@ import com.mycompany.eventmaster.pro.EventMasterSystem;
 import com.mycompany.eventmaster.pro.EventBase;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
 public class DeleteEventPanelForm extends javax.swing.JPanel {
 
@@ -34,10 +35,12 @@ public class DeleteEventPanelForm extends javax.swing.JPanel {
 
     private void deleteEvent() {
         String eventName = (String) jComboBoxEventDelete.getSelectedItem();
+
         if (eventName == null) {
             jLabelResult.setText("Select an event.");
             return;
         }
+        
         system.deleteEvent(eventName);
         jLabelResult.setText("Event deleted.");
         populateEvents();

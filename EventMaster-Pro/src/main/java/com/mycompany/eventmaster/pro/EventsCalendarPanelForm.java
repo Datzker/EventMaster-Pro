@@ -5,9 +5,11 @@
 package com.mycompany.eventmaster.pro;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
+
 public class EventsCalendarPanelForm extends javax.swing.JPanel {
 
     private EventMasterSystem system;
@@ -22,7 +24,7 @@ public class EventsCalendarPanelForm extends javax.swing.JPanel {
         refreshCalendar();
     }
 
-    private void refreshCalendar() {
+    public void refreshCalendar() {
         StringBuilder sb = new StringBuilder();
         for (EventBase event : system.getEvents()) {
             sb.append("Event: ").append(event.getName())

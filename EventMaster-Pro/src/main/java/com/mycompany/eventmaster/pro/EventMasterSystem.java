@@ -63,6 +63,10 @@ public class EventMasterSystem {
         locations.add(location);
     }
 
+    public void deleteLocation(String locationName) {
+        locations.removeIf(l -> l.getName().equalsIgnoreCase(locationName));
+    }
+
     public ArrayList<Location> getLocations() {
         return locations;
     }

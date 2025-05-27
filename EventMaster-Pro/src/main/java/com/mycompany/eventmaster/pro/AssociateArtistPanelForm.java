@@ -9,7 +9,9 @@ import com.mycompany.eventmaster.pro.EventBase;
 import com.mycompany.eventmaster.pro.Artist;
 
 /**
- *
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  * @author Uer
  */
 public class AssociateArtistPanelForm extends javax.swing.JPanel {
@@ -28,10 +30,13 @@ public class AssociateArtistPanelForm extends javax.swing.JPanel {
 
     private void populateComboBoxes() {
         jComboBoxEvent.removeAllItems();
+
         for (EventBase event : system.getEvents()) {
             jComboBoxEvent.addItem(event.getName());
         }
+
         jComboBoxArtist.removeAllItems();
+
         for (Artist artist : system.getArtists()) {
             jComboBoxArtist.addItem(artist.getName());
         }
@@ -40,29 +45,56 @@ public class AssociateArtistPanelForm extends javax.swing.JPanel {
     private void associateArtist() {
         String eventName = (String) jComboBoxEvent.getSelectedItem();
         String artistName = (String) jComboBoxArtist.getSelectedItem();
+
         if (eventName == null || artistName == null) {
             jLabelResult.setText("Select event and artist.");
             return;
         }
+
         EventBase selectedEvent = null;
         Artist selectedArtist = null;
+
         for (EventBase event : system.getEvents()) {
             if (event.getName().equals(eventName)) {
                 selectedEvent = event;
                 break;
             }
         }
+
         for (Artist artist : system.getArtists()) {
             if (artist.getName().equals(artistName)) {
                 selectedArtist = artist;
                 break;
             }
         }
+
         if (selectedEvent != null && selectedArtist != null) {
             selectedEvent.addArtist(selectedArtist);
             jLabelResult.setText("Artist associated.");
+
+            refreshEvents();
+            refreshArtists();
+
+            EventMasterUI mainUI = EventMasterUI.getInstance();
+            if (mainUI != null) {
+                mainUI.refreshAllPanels();
+            }
         } else {
             jLabelResult.setText("Error associating artist.");
+        }
+    }
+
+    public void refreshArtists() {
+        jComboBoxArtist.removeAllItems();
+        for (Artist artist : system.getArtists()) {
+            jComboBoxArtist.addItem(artist.getName());
+        }
+    }
+    
+    public void refreshEvents() {
+        jComboBoxEvent.removeAllItems();
+        for (EventBase event : system.getEvents()) {
+            jComboBoxEvent.addItem(event.getName());
         }
     }
 
@@ -127,7 +159,7 @@ public class AssociateArtistPanelForm extends javax.swing.JPanel {
                 .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

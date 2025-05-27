@@ -8,8 +8,8 @@ package com.mycompany.eventmaster.pro;
 
 public class EventMasterPro {
     public static void main(String[] args) {
-        EventMasterSystem system = new EventMasterSystem();
+      /** EventMasterSystem system = new EventMasterSystem();
         EventMasterUI ui = new EventMasterUI(system);
-        ui.setVisible(true);
+        ui.setVisible(true);*/
     }
 }

@@ -10,15 +10,14 @@ import com.mycompany.eventmaster.pro.Sale;
 import com.mycompany.eventmaster.pro.Ticket;
 
 /**
- *
- * @author Uer
- */
+* Desarrolladores:
+*         - Isabella Gómez Parra.
+*         - Daniel Eduardo González Palacio.
+*/
+
 public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
     private EventMasterSystem system;
 
-    /**
-     * Creates new form ManageTicketsSalesPanelForm
-     */
     public ManageTicketsSalesPanelForm(EventMasterSystem system) {
         this.system = system;
         initComponents();
@@ -40,17 +39,21 @@ public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
         String eventName = (String) jComboBoxEvent.getSelectedItem();
         String buyerName = jTextFBuyerName.getText().trim();
         String purchaseDate = jTextFPurchaseDate.getText().trim();
+
         if (ticketType.isEmpty() || ticketPriceStr.isEmpty() || eventName == null || buyerName.isEmpty() || purchaseDate.isEmpty()) {
             jLabelResult.setText("Please fill all fields.");
             return;
         }
+
         double price;
+
         try {
             price = Double.parseDouble(ticketPriceStr);
         } catch (NumberFormatException ex) {
             jLabelResult.setText("Invalid price.");
             return;
         }
+
         EventBase event = null;
         for (EventBase ev : system.getEvents()) {
             if (ev.getName().equals(eventName)) {
@@ -58,11 +61,13 @@ public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
                 break;
             }
         }
+
         if (event == null) {
             jLabelResult.setText("Event not found.");
             return;
         }
-        Ticket ticket = new Ticket(ticketType, price); // El constructor correcto solo acepta tipo y precio
+
+        Ticket ticket = new Ticket(ticketType, price); 
         system.registerTicket(ticket);
         Sale sale = new Sale(ticket, buyerName, purchaseDate);
         system.registerSale(event, sale);
@@ -72,6 +77,7 @@ public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
 
     private void showSales() {
         StringBuilder sb = new StringBuilder();
+
         for (Sale sale : system.getSales()) {
             sb.append("Type: ").append(sale.getTicket().getType())
               .append(" | Buyer: ").append(sale.getBuyerName())
@@ -79,6 +85,7 @@ public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
               .append(" | Price: $").append(sale.getTicket().getPrice())
               .append("\n");
         }
+        
         jTextAreaSales.setText(sb.toString());
     }
 
@@ -87,6 +94,13 @@ public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
         jTextFTicketPrice.setText("");
         jTextFBuyerName.setText("");
         jTextFPurchaseDate.setText("");
+    }
+    
+    public void refreshEvents() {
+        jComboBoxEvent.removeAllItems();
+        for (EventBase event : system.getEvents()) {
+            jComboBoxEvent.addItem(event.getName());
+        }
     }
 
     /**
@@ -214,7 +228,7 @@ public class ManageTicketsSalesPanelForm extends javax.swing.JPanel {
                 .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -2,6 +2,12 @@ package com.mycompany.eventmaster.pro;
 
 import java.util.ArrayList;
 
+/**
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
+ */
+
 public abstract class EventBase {
     protected String name;
     protected String date;

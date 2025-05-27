@@ -8,9 +8,11 @@ import com.mycompany.eventmaster.pro.EventMasterSystem;
 import com.mycompany.eventmaster.pro.Location;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
+
 public class ManageLocationsPanelForm extends javax.swing.JPanel {
 
     private EventMasterSystem system;
@@ -30,27 +32,56 @@ public class ManageLocationsPanelForm extends javax.swing.JPanel {
         String capacityStr = jTextFCapacity.getText().trim();
         String techDetails = jTextFTechDetails.getText().trim();
         String availableDatesStr = jTextFAvailableDates.getText().trim();
+
         if (name.isEmpty() || capacityStr.isEmpty() || techDetails.isEmpty()) {
             jLabelResult.setText("Please fill all fields.");
             return;
         }
+
         int capacity;
+
         try {
             capacity = Integer.parseInt(capacityStr);
         } catch (NumberFormatException ex) {
             jLabelResult.setText("Invalid capacity.");
             return;
         }
+
         Location location = new Location(name, capacity, techDetails);
+
         if (!availableDatesStr.isEmpty()) {
             String[] dates = availableDatesStr.split(",");
             for (String date : dates) {
                 location.addAvailableDate(date.trim());
             }
         }
+
         system.registerLocation(location);
         jLabelResult.setText("Location added.");
         clearFields();
+
+        EventMasterUI mainUI = EventMasterUI.getInstance();
+        if (mainUI != null) {
+            mainUI.refreshAllPanels();
+        }
+    }
+
+    private void deleteLocation() {
+        String name = jTextFLocationName.getText().trim();
+
+        if (name.isEmpty()) {
+            jLabelResult.setText("Enter location name to delete.");
+            return;
+        }
+
+        system.deleteLocation(name);
+        jLabelResult.setText("Location deleted.");
+        clearFields();
+
+        EventMasterUI mainUI = EventMasterUI.getInstance();
+        if (mainUI != null) {
+            mainUI.refreshAllPanels();
+        }
     }
 
     private void showLocations() {
@@ -170,7 +201,7 @@ public class ManageLocationsPanelForm extends javax.swing.JPanel {
                 .addComponent(jTextFAvailableDates, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonAddLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)

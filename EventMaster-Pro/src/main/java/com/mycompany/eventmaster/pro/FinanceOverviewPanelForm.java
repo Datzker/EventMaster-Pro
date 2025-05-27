@@ -7,9 +7,11 @@ package com.mycompany.eventmaster.pro;
 import com.mycompany.eventmaster.pro.EventMasterSystem;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
+
 public class FinanceOverviewPanelForm extends javax.swing.JPanel {
 
     private EventMasterSystem system;
@@ -24,7 +26,7 @@ public class FinanceOverviewPanelForm extends javax.swing.JPanel {
         refreshFinance();
     }
 
-    private void refreshFinance() {
+    public void refreshFinance() {
         jTextAreaFinance.setText(system.getFinance().toString());
     }
 

@@ -1,5 +1,11 @@
 package com.mycompany.eventmaster.pro;
 
+/**
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
+ */
+
 public class ConcertEvent extends EventBase implements TicketCreatable, FinancialInfoProvider {
     public ConcertEvent(String name, String date, String time, Location location, double budget) {
         super(name, date, time, location, budget);

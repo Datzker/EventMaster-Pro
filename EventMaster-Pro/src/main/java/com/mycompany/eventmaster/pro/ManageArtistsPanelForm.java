@@ -5,20 +5,21 @@
 package com.mycompany.eventmaster.pro;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
+
 public class ManageArtistsPanelForm extends javax.swing.JPanel {
     private EventMasterSystem system;
 
-    /**
-     * Creates new form ManageArtistsPanelForm
-     */
+    
     public ManageArtistsPanelForm(EventMasterSystem system) {
         this.system = system;
         initComponents();
         jButtonAddArtist.addActionListener(e -> addArtist());
         jButtonShowArtists.addActionListener(e -> showArtists());
+        jButtonDeleteArtist.addActionListener(e -> deleteArtist());
     }
 
     private void addArtist() {
@@ -26,11 +27,14 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
         String contact = jTextFContactInfo.getText().trim();
         String techReq = jTextFTechReq.getText().trim();
         String pastEvents = jTextFPastEvents.getText().trim();
+
         if (name.isEmpty() || contact.isEmpty()) {
             jLabelResult.setText("Please enter artist name and contact info.");
             return;
         }
+
         Artist artist = new Artist(name, contact, techReq);
+
         if (!pastEvents.isEmpty()) {
             String[] past = pastEvents.split(",");
             for (String p : past) {
@@ -40,6 +44,11 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
         system.registerArtist(artist);
         jLabelResult.setText("Artist added successfully.");
         clearFields();
+
+        EventMasterUI mainUI = EventMasterUI.getInstance();
+        if (mainUI != null) {
+            mainUI.refreshAllPanels();
+        }
     }
 
     private void showArtists() {
@@ -58,6 +67,22 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
         jTextFContactInfo.setText("");
         jTextFTechReq.setText("");
         jTextFPastEvents.setText("");
+    }
+
+    private void deleteArtist() {
+        String name = jTextFArtistName.getText().trim();
+        if (name.isEmpty()) {
+            jLabelResult.setText("Enter artist name to delete.");
+            return;
+        }
+        system.getArtists().removeIf(a -> a.getName().equalsIgnoreCase(name));
+        jLabelResult.setText("Artist deleted.");
+        clearFields();
+
+        EventMasterUI mainUI = EventMasterUI.getInstance();
+        if (mainUI != null) {
+            mainUI.refreshAllPanels();
+        }
     }
 
     /**
@@ -83,6 +108,7 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
         jTextFArtistName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFContactInfo = new javax.swing.JTextField();
+        jButtonDeleteArtist = new javax.swing.JButton();
 
         jLabel3.setText("Technical Requirements:");
 
@@ -103,6 +129,8 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
         jButtonShowArtists.setText("Show All Artist");
 
         jLabel2.setText("Contact Info:");
+
+        jButtonDeleteArtist.setText("Delete Artist");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -140,6 +168,10 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(149, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jButtonDeleteArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,6 +204,8 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
                 .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(jButtonDeleteArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -180,6 +214,7 @@ public class ManageArtistsPanelForm extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Result;
     private javax.swing.JButton jButtonAddArtist;
+    private javax.swing.JButton jButtonDeleteArtist;
     private javax.swing.JButton jButtonShowArtists;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

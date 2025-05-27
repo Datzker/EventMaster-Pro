@@ -5,8 +5,10 @@
 package com.mycompany.eventmaster.pro;
 
 /**
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  *
- * @author Uer
  */
 public class CreateEventPanelForm extends javax.swing.JPanel {
 
@@ -18,9 +20,11 @@ public class CreateEventPanelForm extends javax.swing.JPanel {
         this.system = system;
         initComponents();
         jComboBoxLocation.removeAllItems();
+
         for (Location loc : system.getLocations()) {
             jComboBoxLocation.addItem(loc.getName());
         }
+
         jButtonCreateEvent.addActionListener(e -> {
             String name = jTextFEventName.getText();
             String date = jTextFEventDate.getText();
@@ -29,24 +33,30 @@ public class CreateEventPanelForm extends javax.swing.JPanel {
             String budgetStr = jTextFEventBudget.getText();
             String locationName = (String) jComboBoxLocation.getSelectedItem();
             Location selectedLocation = null;
+
             for (Location loc : system.getLocations()) {
                 if (loc.getName().equalsIgnoreCase(locationName)) {
                     selectedLocation = loc;
                     break;
                 }
             }
+
             if (name.isEmpty() || date.isEmpty() || time.isEmpty() || category.isEmpty() || budgetStr.isEmpty() || selectedLocation == null) {
                 jLabelResult.setText("Please fill all fields correctly.");
                 return;
             }
+
             double budget;
+
             try {
                 budget = Double.parseDouble(budgetStr);
             } catch (NumberFormatException ex) {
                 jLabelResult.setText("Invalid budget.");
                 return;
             }
+
             EventBase newEvent;
+
             if (category.equalsIgnoreCase("Concert")) {
                 newEvent = new ConcertEvent(name, date, time, selectedLocation, budget);
             } else if (category.equalsIgnoreCase("Conference")) {
@@ -55,6 +65,7 @@ public class CreateEventPanelForm extends javax.swing.JPanel {
                 jLabelResult.setText("Invalid category. Use Concert or Conference.");
                 return;
             }
+
             system.createEvent(newEvent);
             jLabelResult.setText("Event created successfully!");
             jTextFEventName.setText("");
@@ -63,6 +74,13 @@ public class CreateEventPanelForm extends javax.swing.JPanel {
             jTextFEventCategory.setText("");
             jTextFEventBudget.setText("");
         });
+    }
+
+    public void refreshLocations() {
+        jComboBoxLocation.removeAllItems();
+        for (Location loc : system.getLocations()) {
+            jComboBoxLocation.addItem(loc.getName());
+        }
     }
 
     /**
@@ -164,7 +182,7 @@ public class CreateEventPanelForm extends javax.swing.JPanel {
                 .addComponent(jComboBoxLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(jButtonCreateEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()

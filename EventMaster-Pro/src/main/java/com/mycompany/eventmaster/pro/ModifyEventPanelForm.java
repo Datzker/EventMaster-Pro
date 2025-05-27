@@ -5,14 +5,13 @@
 package com.mycompany.eventmaster.pro;
 
 /**
- *
- * @author Uer
+ * Desarrolladores:
+ *         - Isabella Gómez Parra.
+ *         - Daniel Eduardo González Palacio.
  */
+
 public class ModifyEventPanelForm extends javax.swing.JPanel {
     private EventMasterSystem system;
-    /**
-     * Creates new form ModifyEventPanelForm
-     */
 
     public ModifyEventPanelForm(EventMasterSystem system) {
         this.system = system;
@@ -32,6 +31,7 @@ public class ModifyEventPanelForm extends javax.swing.JPanel {
                 jLabelResult.setText("Select an event.");
                 return;
             }
+
             double newBudget = 0;
             try {
                 newBudget = Double.parseDouble(newBudgetStr);
@@ -39,7 +39,8 @@ public class ModifyEventPanelForm extends javax.swing.JPanel {
                 jLabelResult.setText("Invalid budget.");
                 return;
             }
-            // Buscar la nueva ubicación por nombre
+
+
             Location newLocation = null;
             for (Location loc : system.getLocations()) {
                 if (loc.getName().equalsIgnoreCase(newLocationName)) {
@@ -47,24 +48,26 @@ public class ModifyEventPanelForm extends javax.swing.JPanel {
                     break;
                 }
             }
+
             if (newLocation == null) {
                 jLabelResult.setText("Invalid location.");
                 return;
             }
+
             system.modifyEvent(eventName, newDate, newTime, newLocation, newBudget);
             jLabelResult.setText("Event modified.");
             refreshEvents();
         });
     }
     
-    private void refreshEvents() {
+    public void refreshEvents() {
         jComboBoxEvent.removeAllItems();
         for (EventBase event : system.getEvents()) {
             jComboBoxEvent.addItem(event.getName());
         }
     }
 
-    private void refreshLocations() {
+    public void refreshLocations() {
         jComboBoxNewLocation.removeAllItems();
         for (Location loc : system.getLocations()) {
             jComboBoxNewLocation.addItem(loc.getName());
@@ -174,7 +177,7 @@ public class ModifyEventPanelForm extends javax.swing.JPanel {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
